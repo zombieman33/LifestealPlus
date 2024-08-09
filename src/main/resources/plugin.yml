@@ -1,0 +1,15 @@
+name: LifestealPlus
+version: '${project.version}'
+main: me.zombieman.dev.lifestealplus.LifestealPlus
+api-version: '1.20'
+commands:
+  lifestealitem:
+    aliases:
+      - litem
+  withdraw:
+  lifesteal:
+    aliases:
+      - settings
+  deatharena:
+    aliases:
+      - arena

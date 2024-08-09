@@ -1,0 +1,66 @@
+# IMPORTANT:
+# If you change the 'Heart Item Crafting' to false and then true you need to
+# restart your server to see the recipe in the crafting table.
+# The recipe will work but it will not show up as a recipe if searched.
+
+settings:
+  Heart Cap: 20
+  Minimum Hearts: 1
+  Hearts To Get When Revived: 3
+  Player Lose Heart On Death: true
+  Player Lose Heart On Death When Killer Is Not A Player: true
+  Player Gain Heart On Kill: true
+  Heart Item Drop On Death: false # If 'false' it will automatically add the heart to the killer.
+  Heart Item Crafting: true
+  Respawn Item Crafting: true
+  Teleport To Death Arena On Min Heart Death: true
+
+
+Death Arena:
+  Move: true
+  Commands: false
+  Break: false
+  Place: false
+  Damage: false
+  Item-Pickup: false
+  Item-Drop: false
+  Time: false # Timer to get out
+  Timer: 30 # Timer in days
+  TeleportOut:
+  TeleportIn:
+
+heart:
+  item: item-3
+  crafting:
+    pattern:
+      - "123"
+      - "456"
+      - "789"
+    ingredients:
+      1: item-1
+      2: item-2
+      3: item-1
+      4: item-2
+      5: item-1
+      6: item-2
+      7: item-1
+      8: item-2
+      9: item-1
+
+respawnItem:
+  item: item-3
+  crafting:
+    pattern:
+      - "123"
+      - "456"
+      - "789"
+    ingredients:
+      1: item-1
+      2: item-2
+      3: item-1
+      4: item-2
+      5: item-1
+      6: item-2
+      7: item-1
+      8: item-2
+      9: item-1
