@@ -77,6 +77,11 @@ public class HeartRedeemListener implements Listener {
                 player.sendMessage(cap);
                 player.sendActionBar(cap);
                 player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
+
+                if (currentHearts > heartCapAmount) {
+                    heartManager.setHeart(player, heartCapAmount);
+                }
+
                 return true;
             }
         } else {

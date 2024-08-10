@@ -65,6 +65,14 @@ public class WithdrawCmd implements CommandExecutor, TabCompleter {
         int currentHearts = heartManager.getHeart(player);
         int minimumHearts = plugin.getSettingsManager().getMinimumHearts();
 
+        int heartCap = plugin.getSettingsManager().getHeartCap();
+        if (currentHearts > heartCap) {
+            player.sendMessage(ChatColor.RED + "You cannot withdraw hearts when you're above the heart cap!");
+            player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
+            plugin.heartManager.setHeart(player, heartCap);
+            return true;
+        }
+
         String sOrNotMin = (minimumHearts > 1) ? "s" : "";
         if (currentHearts - amount < minimumHearts) {
             player.sendMessage(ChatColor.RED + "You cannot withdraw that many hearts! You must have at least " + minimumHearts + " heart" + sOrNotMin + " remaining.");

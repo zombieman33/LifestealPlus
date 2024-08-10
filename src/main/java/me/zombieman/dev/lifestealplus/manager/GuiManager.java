@@ -68,6 +68,7 @@ public class GuiManager implements Listener {
         // Add player heads
         if (deathArenaPlayers.isEmpty()) {
             player.sendMessage(ChatColor.RED + "There are no players to revive!");
+            player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
             player.closeInventory();
             return;
         }
@@ -109,11 +110,12 @@ public class GuiManager implements Listener {
         closeMeta.setDisplayName(ChatColor.DARK_RED + "Close");
         closeButton.setItemMeta(closeMeta);
 
-        gui.setItem(this.prevPage, prevPage);
+        if (page != 1) gui.setItem(this.prevPage, prevPage);
         gui.setItem(this.closeButton, closeButton);
-        gui.setItem(this.nextPage, nextPage);
+        if (maxPages != page) gui.setItem(this.nextPage, nextPage);
 
         player.openInventory(gui);
+
         getTitle.put(player.getUniqueId(), title);
         getCurrentPage.put(player.getUniqueId(), page);
         getMaxPage.put(player.getUniqueId(), maxPages);
@@ -153,6 +155,7 @@ public class GuiManager implements Listener {
 
         // Pagination logic
         if (slot == nextPage) {
+            if (event.getInventory().getItem(slot).getType() != Material.ARROW) return;
             if (getMaxPage.get(player.getUniqueId()) == getCurrentPage.get(player.getUniqueId())) {
                 player.sendMessage(ChatColor.RED + "You are on the last page!");
                 player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
@@ -165,17 +168,18 @@ public class GuiManager implements Listener {
             uuids.remove(player.getUniqueId());
             openDeathArenaGui(player, currentPage + 1);
         } else if (slot == prevPage) {
+            if (event.getInventory().getItem(slot).getType() != Material.ARROW) return;
             if (getCurrentPage.get(player.getUniqueId()) == 1) {
                 player.sendMessage(ChatColor.RED + "You are on the first page!");
                 player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
                 player.closeInventory();
                 return;
             }
-            openDeathArenaGui(player, currentPage - 1);
             getTitle.remove(player.getUniqueId());
             getMaxPage.remove(player.getUniqueId());
             getCurrentPage.remove(player.getUniqueId());
             uuids.remove(player.getUniqueId());
+            openDeathArenaGui(player, currentPage - 1);
         } else if (slot == closeButton) {
             player.closeInventory();
         }
