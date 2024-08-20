@@ -1,5 +1,6 @@
 name: LifestealPlus
 version: '${project.version}'
+author: zombieman
 main: me.zombieman.dev.lifestealplus.LifestealPlus
 api-version: '1.13'
 commands:

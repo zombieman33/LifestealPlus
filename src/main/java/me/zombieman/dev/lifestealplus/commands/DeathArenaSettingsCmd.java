@@ -170,7 +170,13 @@ public class DeathArenaSettingsCmd implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+
         List<String> completions = new ArrayList<>();
+        if (!(sender instanceof Player)) {
+            Player player = (Player) sender;
+            if (!player.hasPermission("lifestealplus.command.deatharena")) return completions;
+        }
+
         if (args.length == 1) {
             completions = Arrays.asList("setmove", "setcommands", "setbreak", "setpickup", "setdrop", "setplace", "setdamage", "settime", "settimer", "setteleportin", "setteleportout");
         } else if (args.length == 2) {

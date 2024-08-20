@@ -1,6 +1,7 @@
 package me.zombieman.dev.lifestealplus.listeners;
 
 import me.zombieman.dev.lifestealplus.LifestealPlus;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -56,9 +57,11 @@ public class PlayerListener implements Listener {
     }
     @EventHandler
     public void onDamage(EntityDamageEvent event) {
-        Player player = (Player) event.getEntity();
-        if (plugin.deathArenaManager.isPlayerInDeathArena(player)) {
-            if (!plugin.getConfig().getBoolean("Death Arena.Damage")) event.setCancelled(true);
+        Entity entity = event.getEntity();
+        if (entity instanceof Player player) {
+            if (plugin.deathArenaManager.isPlayerInDeathArena(player)) {
+                if (!plugin.getConfig().getBoolean("Death Arena.Damage")) event.setCancelled(true);
+            }
         }
     }
     @EventHandler

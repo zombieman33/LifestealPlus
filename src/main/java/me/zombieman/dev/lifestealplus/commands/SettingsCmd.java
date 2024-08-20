@@ -156,6 +156,10 @@ public class SettingsCmd implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         List<String> completions = new ArrayList<>();
 
+        if (!(sender instanceof Player)) {
+            Player player = (Player) sender;
+            if (!player.hasPermission("lifestealplus.command.settings")) return completions;
+        }
         if (args.length == 1) {
             completions = Arrays.asList("loseondeath", "loseondeathnpc", "gainonkill", "cap", "minhearts", "dropondeath", "heartcrafting", "respawncrafting", "deatharena", "heartsonrevive");
         } else if (args.length == 2) {

@@ -15,7 +15,6 @@ settings:
   Respawn Item Crafting: true
   Teleport To Death Arena On Min Heart Death: true
 
-
 Death Arena:
   Move: true
   Commands: false
@@ -30,37 +29,37 @@ Death Arena:
   TeleportIn:
 
 heart:
-  item: item-3
+  item: # Item ID
   crafting:
     pattern:
       - "123"
       - "456"
       - "789"
     ingredients:
-      1: item-1
-      2: item-2
-      3: item-1
-      4: item-2
-      5: item-1
-      6: item-2
-      7: item-1
-      8: item-2
-      9: item-1
+      1: # Item ID
+      2: # Item ID
+      3: # Item ID
+      4: # Item ID
+      5: # Item ID
+      6: # Item ID
+      7: # Item ID
+      8: # Item ID
+      9: # Item ID
 
 respawnItem:
-  item: item-3
+  item: # Item ID
   crafting:
     pattern:
       - "123"
       - "456"
       - "789"
     ingredients:
-      1: item-1
-      2: item-2
-      3: item-1
-      4: item-2
-      5: item-1
-      6: item-2
-      7: item-1
-      8: item-2
-      9: item-1
+      1: # Item ID
+      2: # Item ID
+      3: # Item ID
+      4: # Item ID
+      5: # Item ID
+      6: # Item ID
+      7: # Item ID
+      8: # Item ID
+      9: # Item ID
