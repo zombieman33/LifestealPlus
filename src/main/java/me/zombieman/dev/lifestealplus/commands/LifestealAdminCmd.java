@@ -69,7 +69,7 @@ public class LifestealAdminCmd implements CommandExecutor, TabCompleter {
 
                 hearts = hearts + amount;
 
-                config.set("heats", hearts);
+                config.set("hearts", hearts);
 
                 if (Bukkit.getPlayer(targetName) != null) {
                     Bukkit.getPlayer(targetName).setMaxHealth(hearts);
@@ -79,7 +79,7 @@ public class LifestealAdminCmd implements CommandExecutor, TabCompleter {
 
                 hearts = hearts - amount;
 
-                config.set("heats", hearts);
+                config.set("hearts", hearts);
 
                 if (Bukkit.getPlayer(targetName) != null) {
                     Bukkit.getPlayer(targetName).setMaxHealth(hearts);
@@ -87,7 +87,7 @@ public class LifestealAdminCmd implements CommandExecutor, TabCompleter {
             } else if (args[0].equalsIgnoreCase("set")) {
                 hearts = amount;
 
-                config.set("heats", hearts);
+                config.set("hearts", hearts);
 
                 if (Bukkit.getPlayer(targetName) != null) {
                     Bukkit.getPlayer(targetName).setMaxHealth(hearts);
