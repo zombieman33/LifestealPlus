@@ -14,3 +14,6 @@ commands:
   deatharena:
     aliases:
       - arena
+  lifestealadmin:
+    aliases:
+      - la

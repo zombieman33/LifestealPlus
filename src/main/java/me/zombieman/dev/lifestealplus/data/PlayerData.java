@@ -122,7 +122,7 @@ public class PlayerData {
         if (playerDataFolder.exists() &&  playerDataFolder.isDirectory()) {
             for (File playerFile : playerDataFolder.listFiles()) {
                 FileConfiguration data = YamlConfiguration.loadConfiguration(playerFile);
-                String name = data.getString("LifestealPlus.player." + playerFile.getName().replace(".yml", "") + ".ign");
+                String name = data.getString("name");
                 if (playerName.equalsIgnoreCase(name)) {
                     return true;
                 }
@@ -174,6 +174,22 @@ public class PlayerData {
             }
         }
         return playerFileNames;
+    }
+    public static List<String> getAllPlayerNames(LifestealPlus plugin) {
+        List<String> playerNames = new ArrayList<>();
+        File playerDataFolder = new File(plugin.getDataFolder(), PlayerData.DATA_FOLDER_NAME);
+
+        if (playerDataFolder.exists() && playerDataFolder.isDirectory()) {
+            for (File playerFile : playerDataFolder.listFiles((dir, name) -> name.toLowerCase().endsWith(".yml"))) {
+                FileConfiguration data = YamlConfiguration.loadConfiguration(playerFile);
+                String name = data.getString("name");
+                if (name != null) {
+                    playerNames.add(name);
+                }
+            }
+        }
+
+        return playerNames;
     }
 
 }

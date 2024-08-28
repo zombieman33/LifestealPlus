@@ -1,9 +1,6 @@
 package me.zombieman.dev.lifestealplus;
 
-import me.zombieman.dev.lifestealplus.commands.DeathArenaSettingsCmd;
-import me.zombieman.dev.lifestealplus.commands.LifestealItemCmd;
-import me.zombieman.dev.lifestealplus.commands.SettingsCmd;
-import me.zombieman.dev.lifestealplus.commands.WithdrawCmd;
+import me.zombieman.dev.lifestealplus.commands.*;
 import me.zombieman.dev.lifestealplus.crafting.HeartCrafting;
 import me.zombieman.dev.lifestealplus.crafting.RespawnItemRecipe;
 import me.zombieman.dev.lifestealplus.data.ItemData;
@@ -56,6 +53,7 @@ public final class LifestealPlus extends JavaPlugin {
         getCommand("withdraw").setExecutor(new WithdrawCmd(this));
         getCommand("lifesteal").setExecutor(new SettingsCmd(this));
         getCommand("deatharena").setExecutor(new DeathArenaSettingsCmd(this, deathArenaManager));
+        getCommand("lifestealadmin").setExecutor(new LifestealAdminCmd(this));
 
         timerPlaceholder = new TimerPlaceholder(this);
         timerPlaceholder.register();
