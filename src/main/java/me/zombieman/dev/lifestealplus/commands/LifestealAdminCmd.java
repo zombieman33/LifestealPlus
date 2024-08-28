@@ -22,6 +22,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class LifestealAdminCmd implements CommandExecutor, TabCompleter {
@@ -55,10 +56,18 @@ public class LifestealAdminCmd implements CommandExecutor, TabCompleter {
             }
             FileConfiguration config = PlayerData.getPlayerDataConfigByName(plugin, targetName);
 
+            String uuidStr = config.getString("uuid");
+
+            if (uuidStr == null) {
+                player.sendMessage(ChatColor.RED + targetName + "'s uuid doesn't exist, please tell them to rejoin!");
+                player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
+                return false;
+            }
+
             int amount;
 
             try {
-                amount = Integer.parseInt(args[2]);
+                amount = Integer.parseInt(args[2]) * 2;
             } catch (IllegalArgumentException e) {
                 amount = 0;
             }
@@ -69,7 +78,13 @@ public class LifestealAdminCmd implements CommandExecutor, TabCompleter {
 
                 hearts = hearts + amount;
 
-                config.set("hearts", hearts);
+                config.set("hearts", (hearts / 2));
+                PlayerData.savePlayerData(plugin, UUID.fromString(uuidStr));
+
+                player.sendMessage(MiniMessage.miniMessage().deserialize("<#00FF00>You successfully added " + (amount / 2) + " hearts to " + targetName));
+                player.sendMessage(MiniMessage.miniMessage().deserialize("<#00FF00>" + targetName + "'s hearts is now: " + (hearts / 2)));
+
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1.0f, 1.0f);
 
                 if (Bukkit.getPlayer(targetName) != null) {
                     Bukkit.getPlayer(targetName).setMaxHealth(hearts);
@@ -79,7 +94,19 @@ public class LifestealAdminCmd implements CommandExecutor, TabCompleter {
 
                 hearts = hearts - amount;
 
-                config.set("hearts", hearts);
+                if (hearts <= 0) {
+                    player.sendMessage(ChatColor.RED + "You cannot remove hearts from this guy if it ends up being negative or 0.");
+                    player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
+                    return false;
+                }
+
+                config.set("hearts", (hearts / 2));
+                PlayerData.savePlayerData(plugin, UUID.fromString(uuidStr));
+
+                player.sendMessage(MiniMessage.miniMessage().deserialize("<#00FF00>You successfully removed " + (amount / 2) + " hearts from " + targetName));
+                player.sendMessage(MiniMessage.miniMessage().deserialize("<#00FF00>" + targetName + "'s hearts is now: " + (hearts / 2)));
+
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1.0f, 1.0f);
 
                 if (Bukkit.getPlayer(targetName) != null) {
                     Bukkit.getPlayer(targetName).setMaxHealth(hearts);
@@ -87,7 +114,13 @@ public class LifestealAdminCmd implements CommandExecutor, TabCompleter {
             } else if (args[0].equalsIgnoreCase("set")) {
                 hearts = amount;
 
-                config.set("hearts", hearts);
+                if (checkIfYouTryToKillThisGuy(hearts, player)) return false;
+                config.set("hearts", (hearts / 2));
+                PlayerData.savePlayerData(plugin, UUID.fromString(uuidStr));
+
+                player.sendMessage(MiniMessage.miniMessage().deserialize("<#00FF00>You successfully set " + (amount / 2) + " hearts to " + targetName));
+
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1.0f, 1.0f);
 
                 if (Bukkit.getPlayer(targetName) != null) {
                     Bukkit.getPlayer(targetName).setMaxHealth(hearts);
@@ -97,6 +130,15 @@ public class LifestealAdminCmd implements CommandExecutor, TabCompleter {
             }
         } else {
             player.sendMessage(ChatColor.YELLOW + "/lifestealadmin <add, remove, set> <player> <amount>");
+        }
+        return false;
+    }
+
+    private static boolean checkIfYouTryToKillThisGuy(int hearts, Player player) {
+        if (hearts <= 0) {
+            player.sendMessage(ChatColor.RED + "You cannot remove hearts from this guy if it ends up being negative or 0.");
+            player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
+            return true;
         }
         return false;
     }

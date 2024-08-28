@@ -42,6 +42,7 @@ public class JoinQuitListener implements Listener {
         }
 
         PlayerData.getPlayerDataConfig(plugin, player).set("name", player.getName());
+        PlayerData.getPlayerDataConfig(plugin, player).set("uuid", player.getUniqueId().toString());
 
         if (PlayerData.getPlayerDataConfig(plugin, player).getString("hearts") == null) {
             PlayerData.getPlayerDataConfig(plugin, player).set("hearts", 10);
